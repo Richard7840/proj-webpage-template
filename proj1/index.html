@@ -1,7 +1,237 @@
 <html>
 	<head>
+		<title>Project 1 writeup</title>
 	</head>
+	<style>
+		p {
+			/* border: 2px solid powderblue; */
+			margin-left: 50px;
+			margin-right: 50px;
+		}
+		.center {
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			/* width: 50%; */
+		}
+		.div{
+			float: left;
+			width: 300px;
+		}
+		body {
+			/* padding: 100px; */
+			margin-left: 200px;
+			margin-right: 200px;
+			background-color: #121212;
+			color: white;
+			font-size: 20px;
+			line-height: 1.5;
+		}
+	</style>
 	<body>
-		Project 1 here
+		<nav>
+			<a href="../index.html">Home</a> |
+			<a href="#overview">Overview</a> |
+			<a href="#task1">Task 1</a> |
+			<a href="#task2">Task 2</a> |
+			<a href="#task3">Task 3</a> |
+			<a href="#task4">Task 4</a> |
+			<a href="#task5">Task 5</a> |
+			<a href="#task6">Task 6</a> |
+			<a href="https://www.youtube.com/watch?v=RfedW7_-QHM">Rasterization Sacrifice to Hakurei Shrine</a>
+		</nav>
+
+		<h1 style="text-align:center;">Project 1: Rasterization</h1>
+
+		<h2 id="overview">Overview</h2>
+		<p>This project was about implementing software that, given a 2D image, can rasterize it to a pixelated display
+		and perform various anti-aliasing techniques. This includes interpolating colors between samples, 
+		and applying distorted textures to a display. 
+		This project showed me how effective interpolation can be as an anti-aliasing method,
+		and how important optimizations can be for the algorithms in general. 
+		It was also interesting to see how implementing the method for the simplest geometry (triangles) 
+		could be generalized across much more complex and detailed geometries and images.</p>
+
+		<h2 id="task1">Task 1</h2>
+		<p>Triangles are rasterized by sampling the center of every pixel around the triangle, 
+		and performing in-triangle tests by checking if the point is on the correct side of each of the three edges.
+		The test corresponds to taking the dot product of the point with the edge to see what side it lies on.
+		To find out which side is the "correct" side, a similar 4th test is performed to see which side 
+		an arbitrary 3rd vertex lies on compared to the line through the other 2 vertices. 
+		<br>
+		Since the 3rd vertex should always be inside the triangle, this gives us the "correct" side of each edge,
+		and is used to perform the three other line tests. If all three line tests evaluate to true,
+		we know that the sample lies inside the triangle. 
+		<br>
+		Thus the buffer corresponding to that pixel is filled with the appropriate color of the triangle.
+		My algorithm runs efficiently by only checking pixels bound by the rectangle formed by the 
+		most extreme vertices of the triangle. With a few min() and max() calls it is quick to determine 
+		the rectangular bounds of the triangle, and those serve as the bounds for the double for loop which 
+		performs the rasterization. Thus only the samples within the bounding box of the triangle are checked.
+		</p>
+		<img class="center" src="./task1.png" width="400" height="400">
+		<p>Above is a screenshot <i>basic/test4.svg</i>. On the top right is the pixel inspector on the rightmost vertex of the red triangle.
+		The aliasing is obvious at this sharp edge.</p>
+
+		<h2 id="task2">Task 2</h2>
+		<p>In order to implement supersampling, the <i>sample_buffer</i> is used to store all the supersamples. 
+		The sample buffer must then be (<i>width × height × sample_rate</i>) in size. It follows the same sampling algorithm 
+		as the normal sampling does: 
+		<br>
+		Sample a point, Perform the in-triangle test, and if the point is in the triangle, Write the color in <i>sample_buffer</i>. 
+		<br>
+		The only difference from normal sampling is the number of points and their granularity, which depends on the sample rate.
+		<br><br>
+		Once the sampling is complete, we downsample the (<i>width × height × sample_rate</i>) samples 
+		to the (<i>width × height</i>) pixels we hold in the <i>frame_buffer</i>.  This buffer holds each pixel of the display in rgb format,
+		so the actual size of the <i>frame_buffer</i> is (<i>width × height × 3</i>), with each value being an integer from 0-255.
+		<br>
+		To downsample, for every pixel we average all the corresponding supersample colors (sample rate = number of supersamples),
+		and assign the averaged color to the frame buffer pixel after converting to the 0-255 rgb values.
+		<br><br>
+		<!-- *screenshots of test4.svg at different sample rates in cs 184 folder* -->
+		As can be seen in the below images at various levels of supersampling,
+		the edges seem to be smoother as corners are blurred and become less jagged.
+		This is because with supersampling we are increasing the resolution of our sampling, 
+		and using it to alleviate the aliasing from our lower resolution display.</p>
+		<div style="display: flex;">
+			<img src="./task2samplerate1.png" width="300" height="300" style="flex: 1; margin: 25px;" >
+			<img src="./task2samplerate4.png" width="300" height="300" style="flex: 1; margin: 25px;">
+			<img src="./task2samplerate16.png" width="300" height="300" style="flex: 1; margin: 25px;">
+		</div>
+		<p>Above are three screenshots of <i>basic/test4.svg</i> with the pixel inspector shown on the top right. 
+		The images are rendered with a supersample rate of 1, 4, and 16 per pixel, from left to right respectively.</p>
+
+		<h2 id="task3">Task 3</h3>
+		<p>2D affine transformations in our implementation are rather straightforward as they can be implemented with 3x3 matrices.
+		This can be done because the coordinates of a point are represented as [x, y, 1], where the third element allows us to perform
+		affine transformations, which normally wouldn't be possible with just 2d vectors and matrices.
+		<!-- <ARRAY>
+			<row><item>1<item>0<item>dx
+			<row><item>0<item>1<item>dy
+			<row><item>0<item>0<item>1
+		</ARRAY> -->
+		<br>
+		As an example of the aforementioned transformations, below is our polygonal friend cubeman performing a garish salute
+		to an anonymous figure.
+		</p>
+		<img class="center" src="./my_robot.svg" width="400" height="400">
+
+		<h2 id="task4">Task 4</h3>
+		<p>Barycentric coordinates are a system of labelling the position of a point inside a triangle relative to the three vertices. 
+		There are three Barycentric coordinates, each corresponding to the relative distance from a single vertex. 
+		<br>
+		The coordinates vary from 0 to 1 and the three coordinates always add to 1: 
+		<br>
+		When the coordinate is 0 the point is on the other side of the triangle, when its 1, the point is on the vertex. 
+		Thus if the point is right on top of the 3rd vertex, the barycentric coordinates would be (0, 0, 1).
+		<br>
+		For points in between, the coordinate value is the ratio of the distance between the vertex and the opposite edge. 
+		If the point was halfway between the first vertex and the second vertex along the edge connecting them,
+		the barycentric coordinates would be (0.5, 0.5, 0).</p>
+		<div style="display: flex;">
+			<img src="./task4.png" width="300" height="300" style="flex: 1; margin-top: 25px; margin-bottom: 25px; margin-left: 100px; margin-right: 100px;" >
+			<img src="./task4barytriangle.png" width="300" height="300" style="flex: 1;  margin-top: 25px; margin-bottom: 25px; margin-left: 100px; margin-right: 100px;">
+		</div>
+		<p>Above are screenshots showcasing how barycentric coordinates can be used to interpolate color. 
+		On the left is a screenshot of <i>basic/test7.svg</i> with default viewing parameters. 
+		<br>
+		On the right is a triangle with each vertex given a pure rgb color, and the rest of the triangle is colored with barycentric interpolation.
+		Their rgb value is a weighted average of the three vertices, where the weights are determined by their barycentric coordinates.
+		For example, the center point has an rgb value of (255/3, 255/3, 255/3).</p>
+
+		<h2 id="task5">Task 5</h3>
+		<p>Pixel sampling is the method by which a texture is mapped to a geometry we want to show. 
+		When we map a texture to our image, we do so triangle by triangle, and the triangle on the image can be transformed on to the texture. 
+		As far as I can tell there are two approaches, using barycentric coordinates or affine transformation matrices, and they should both be equivalent.
+		I used the matrix approach, and for every pair of triangles created a matrix to describe the affine transformation from one triangle to the other.
+		<br>
+		Mathematically, the points in the image <i>A</i> are mapped to the points in the texture <i>B</i> by a matrix <i>M</i> such that <i>MA = B</i>
+		<br>
+		Thus <i>M = BA^-1</i>
+		<br><br>
+		Once the mapping is complete, each sample in the triangle can be mapped to a location in the texture. 
+		However, since the texture has a resolution as well and the sample location is a float, pixel sampling methods are needed. 
+		<br>
+		In our implementation we have nearest and bilinear. Nearest pixel sampling is the simplest: 
+		sample the pixel that is nearest to the sample.
+		The implementation is just taking the floor of the sample coordinates. 
+		<br> 
+		Bilinear is a bit more complicated since it samples the four surrounding texture pixels and performs a weighted average (linear interpolation). </p>
+		<div style="display: flex;">
+			<img src="./task5_nearest_samplerate1.png" width="300" height="300" style="flex: 1; margin-top: 25px; margin-bottom: 25px; margin-left: 150px; margin-right: 50px;" >
+			<img src="./task5_nearest_samplerate16.png" width="300" height="300" style="flex: 1;  margin-top: 25px; margin-bottom: 25px; margin-left: 50px; margin-right: 150px;">
+		</div>
+		<div style="display: flex;">
+			<img src="./task5_bilinear_samplerate1.png" width="300" height="300" style="flex: 1; margin-top: 25px; margin-bottom: 25px; margin-left: 150px; margin-right: 50px;" >
+			<img src="./task5_bilinear_samplerate16.png" width="300" height="300" style="flex: 1;  margin-top: 25px; margin-bottom: 25px; margin-left: 50px; margin-right: 150px;">
+		</div>
+		<p>Above are 4 screenshots of <i>/texmap/text1.svg</i> at various sample rates with the two different pixel sampling methods.
+		<br>The top and bottom row correspond to the nearest and bilinear pixel sampling methods, and
+		<br> the left and right column correspond to a sample rate of 1 and 16 per pixel, respectively.
+		<br><br>
+		As can be seen by comparing these images, bilinear makes the biggest difference at lower sample rates where nearest struggles, 
+		but at high sample rates both perform about the same. This is because bilinear is effectively super sampling the texture except with linear interpolation.
+		Thus we can expect increasing the sample rate and turning on bilinear pixel sampling to have similar effects. When the sample rate is already high,
+		turning on bilinear won't do too much more because the interpolation is already being done by the supersampling.
+		</p>
+
+		<h2 id="task6">Task 6</h3>
+		<p>Level sampling is the method used for choosing which level of mipmap to sample from, which when used correctly, can conserve resources. 
+		Each level of mipmap is half the dimensions of the previous level, and has a quarter of the resolution (and the size). 
+		To implement level sampling, we calculate the necessary mipmap level by calculating the relative size of our image sample pixel on the texture map. 
+		If the relative size is large, then we can use a higher level of mipmap without compromising the quality since 
+		the texture has a higher resolution than the display.
+		<br><br>
+		To find the mipmap level, we take the derivative of the texture coordinates with respect to the image coordinates and take the norm, 
+		which allows us to see how many texture pixels a pixel in the image would take up along the grid axes.
+		Taking the base 2 log of this gives us the level of the mipmap we can use without reducing quality, 
+		since even if the texture is lower resolution, the image uses a squished version of the texture so the end product won't show this. 
+		<br><br>
+		There are three methods of level sampling we implement, zero level, nearest level, and linear level. 
+		The zero level always picks the 0th mipmap level, and is the naive solution, 
+		the nearest level chooses the closest appropriate value, in this case the floor of the float level we calculate with the log method. 
+		The linear level interpolates between the floor and ceil of the float level using a weighted average (linear interpolation)
+		very similar to what we used in linear pixel sampling.</p>
+		<h3>Sampling Tradeoffs</h3>
+		<p>Level sampling mostly improves memory usage, and helps with anti-aliasing. Using the nearest level of level sampling will always reduce memory usage, 
+		while bilinear level sampling will reduce memory usage as long as most of the geometry doesn't require level 0 mipmaps. In terms of speed, 
+		these level sampling methods slow down processing, especially bilinear level sampling since 
+		it requires sampling from two levels which doubles the amount of computations required. 
+		The other overhead for calculating the level is relatively small, especially compared to the memory efficiency gained.
+		<br>
+		In general, level sampling helps with anti-aliasing by effectively sampling from a blurred texture avoiding sharp aliasing.
+		<br><br>
+		Pixel sampling allows us to perform texture mapping, and gives us options to optimize for speed or anti-aliasing. 
+		The naive solution of nearest sampling is cheap computationally but is prone to aliasing. Meanwhile bilinear sampling 
+		is more computationally expensive and thus slower, but by linearly interpolating between adjacent pixels it does good job
+		of removing local aliasing.
+		<br><br>
+		Super sampling has a simple speed/memory vs anti-aliasing power relationship. 
+		N samples per pixel will be N times slower and N times more memory expensive, but can solve most aliasing problems.
+		It is the brute force solution that will get the job done, but it can get expensive quickly.
+		</p>
+
+		<img class="center" src="./FLIR0092.png" width="400" height="400">
+		<p>Above is the reference png image of the transformed images below. It is a thermal image of myself taken sometime last year.
+		Below the transformations from <i>texmap/test4.svg</i> were applied.
+		<br>
+		The top row has level 0 sampling, and the bottom row has nearest level sampling. 
+		The left column has nearest pixel sampling, and the right has bilinear pixel sampling.
+		<br>
+		All images have a sample rate of 1 per pixel (no supersampling) in order to make aliasing easier to see.
+		</p>
+		<div style="display: flex;">
+			<img src="./task6_l0_pnearest.png" width="300" height="300" style="flex: 1; margin-top: 25px; margin-bottom: 25px; margin-left: 150px; margin-right: 50px;" >
+			<img src="./task6_l0_plinear.png" width="300" height="300" style="flex: 1;  margin-top: 25px; margin-bottom: 25px; margin-left: 50px; margin-right: 150px;">
+		</div>
+		<div style="display: flex;">
+			<img src="./task6_lnearest_pnearest.png" width="300" height="300" style="flex: 1; margin-top: 25px; margin-bottom: 25px; margin-left: 150px; margin-right: 50px;" >
+			<img src="./task6_lnearest_plinear.png" width="300" height="300" style="flex: 1;  margin-top: 25px; margin-bottom: 25px; margin-left: 50px; margin-right: 150px;">
+		</div>
+		<p>As can be seen above, for this image nearest level sampling made negligible aesthetic difference, but behind the scenes there are memory savings.
+		Bilinear pixel interpolation on the other hand helped a lot with aliasing.
+		</p>
+		
 	</body>
 </html>
