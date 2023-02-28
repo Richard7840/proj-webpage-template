@@ -175,9 +175,24 @@
   Show screenshots of dae/teapot.dae (not .bez) comparing teapot shading with and without vertex normals. Use <kbd>Q</kbd> to toggle default flat shading and Phong shading.
 </b>
 <p>
-    <div style="display: flex;">
+    <!-- <div style="display: flex;">
 		<img src="./task3flat.png" width="300" height="300" style="flex: 1; margin: 25px;" >
 		<img src="./task3smooth.png" width="300" height="300" style="flex: 1; margin: 25px;">
+	</div> -->
+	<div align="middle">
+		<table style="width:100%">
+		  <tr align="center">
+			<td>
+				<img src="./task3flat.png" align="middle" width="400px"/>
+				<figcaption>Flat shading.</figcaption>
+			</td>
+			<br>
+			<td>
+				<img src="./task3smooth.png" align="middle" width="400px"/>
+				<figcaption>Phong shading.</figcaption>
+			</td>
+		  </tr>
+		</table>
 	</div>
 </p>
 <br>
@@ -197,9 +212,20 @@
   Show screenshots of the teapot before and after some edge flips.
 </b>
 <p>
-    <div style="display: flex;">
-		<img src="./task4beforeflip.png" width="300" height="300" style="flex: 1; margin: 25px;" >
-		<img src="./task4afterflip.png" width="300" height="300" style="flex: 1; margin: 25px;">
+	<div align="middle">
+		<table style="width:100%">
+		  <tr align="center">
+			<td>
+				<img src="./task4beforeflip.png" align="middle" width="400px"/>
+				<figcaption>Standard teapot model</figcaption>
+			</td>
+			<br>
+			<td>
+				<img src="./task4afterflip.png" align="middle" width="400px"/>
+				<figcaption>Teapot after series of edge flips</figcaption>
+			</td>
+		  </tr>
+		</table>
 	</div>
 </p>
 <br>
@@ -229,9 +255,20 @@
     Show screenshots of a mesh before and after some edge splits. 
 </b>
 <p>
-    <div style="display: flex;">
-		<img src="./task5before.png" width="300" height="300" style="flex: 1; margin: 25px;" >
-		<img src="./task5aftersplit.png" width="300" height="300" style="flex: 1; margin: 25px;">
+	<div align="middle">
+		<table style="width:100%">
+		  <tr align="center">
+			<td>
+				<img src="./task5before.png" align="middle" width="400px"/>
+				<figcaption>Standard teapot model</figcaption>
+			</td>
+			<br>
+			<td>
+				<img src="./task5aftersplit.png" align="middle" width="400px"/>
+				<figcaption>Teapot after series of edge splits</figcaption>
+			</td>
+		  </tr>
+		</table>
 	</div>
 </p>
 <br>
@@ -241,9 +278,20 @@
     Show screenshots of a mesh before and after a combination of both edge splits and edge flips.
 </b>
 <p>
-    <div style="display: flex;">
-		<img src="./task5before.png" width="300" height="300" style="flex: 1; margin: 25px;" >
-		<img src="./task5aftersplitflip.png" width="300" height="300" style="flex: 1; margin: 25px;">
+	<div align="middle">
+		<table style="width:100%">
+		  <tr align="center">
+			<td>
+				<img src="./task5before.png" align="middle" width="400px"/>
+				<figcaption>Standard teapot model</figcaption>
+			</td>
+			<br>
+			<td>
+				<img src="./task5aftersplitflip.png" align="middle" width="400px"/>
+				<figcaption>Teapot after series of edge splits/flips</figcaption>
+			</td>
+		  </tr>
+		</table>
 	</div>
 </p>
 <br>
@@ -262,7 +310,21 @@
     If you have implemented support for boundary edges, show screenshots of your implementation properly handling split operations on boundary edges.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+	<div align="middle">
+		<table style="width:100%">
+		  <tr align="center">
+			<td>
+			  <img src="./carheadlight.png" align="middle" width="400px"/>
+			  <figcaption>Boundary edges pre subdivision</figcaption>
+			</td>
+			<br>
+			<td>
+				<img src="./task5ExCred.png" align="middle" width="400px"/>
+				<figcaption>Boundary edges post-split</figcaption>
+			</td>
+		  </tr>
+		</table>
+	</div>
 </p>
 <br>
 
@@ -285,9 +347,21 @@
 </b>
 <p>
     Sharp corners/edges are softened and smoothed over after successive loop subdivision. If we want to reduce this smoothing effect, we can increase the density of triangles in the region by presplitting local edges. This way, the subdivision won't be able to treat the edge equally to other faces.
-	<div style="display: flex;">
-		<img src="./task6presubdiv.png" width="300" height="300" style="flex: 1; margin: 25px;" >
-		<img src="./task6postsubdiv.png" width="300" height="300" style="flex: 1; margin: 25px;">
+
+	<div align="middle">
+		<table style="width:100%">
+		  <tr align="center">
+			<td>
+			  <img src="./task6presubdiv.png" align="middle" width="400px"/>
+			  <figcaption>Pre-Split to reduce smoothing.</figcaption>
+			</td>
+			<br>
+			<td>
+				<img src="./task6postsubdiv.png" align="middle" width="400px"/>
+				<figcaption>3 subdivision levels of presplit mesh.</figcaption>
+			</td>
+		  </tr>
+		</table>
 	</div>
 	<!-- post 3 subdivision levels -->
 </p>
@@ -304,18 +378,18 @@
 		  <tr align="center">
 			<td>
 			  <img src="./task6cube_asymmetric.png" align="middle" width="400px"/>
-			  <figcaption>Level 0</figcaption>
-			</td>
-			<td>
-			  <img src="./task6cube_symmetric_presubdivision.png" align="middle" width="400px"/>
-			  <figcaption>Level 1</figcaption>
+			  <figcaption>Asymmetric subdivision</figcaption>
 			</td>
 		  </tr>
 		  <br>
 		  <tr align="center">
 			<td>
+				<img src="./task6cube_symmetric_presubdivision.png" align="middle" width="400px"/>
+				<figcaption>Presplit symmetric cube</figcaption>
+			</td>
+			<td>
 			  <img src="./task6cube_symmetric.png" align="middle" width="400px"/>
-			  <figcaption>Level 2</figcaption>
+			  <figcaption>Symmetric subdivision</figcaption>
 			</td>
 		  </tr>
 		</table>
@@ -328,7 +402,24 @@
     If you have implemented any extra credit extensions, explain what you did and document how they work with screenshots.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+    We implemented boundary support for the mesh operations. On top of the edge splits on boundary edges for task 5, this requires handling the weighting of new and old vertices that are on the boundary.
+	New vertices are weighted as the average of the two adjacent boundary vertices, and old vertices are weighted as 1/8 of the two adjacent boundary vertices, and 3/4 its current position.
+	This weighting ensures the boundary edges stay where they were originally defined, but are smoothed by the loop subdivision.
+	<div align="middle">
+		<table style="width:100%">
+		  <tr align="center">
+			<td>
+			  <img src="./carheadlight.png" align="middle" width="400px"/>
+			  <figcaption>Boundary edges pre subdivision</figcaption>
+			</td>
+			<br>
+			<td>
+				<img src="./task6ExCred.png" align="middle" width="400px"/>
+				<figcaption>Boundary edges post-subdivision</figcaption>
+			</td>
+		  </tr>
+		</table>
+	</div>
 </p>
 <br>
 
