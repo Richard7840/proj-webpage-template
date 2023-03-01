@@ -81,7 +81,7 @@
 <p>
 	<div align="middle">
 		<img src="task1og.png" align="middle" width="50%">
-	  </div>
+	</div>
 </p>
 <!-- Example of including a single figure -->
 
@@ -175,10 +175,6 @@
   Show screenshots of dae/teapot.dae (not .bez) comparing teapot shading with and without vertex normals. Use <kbd>Q</kbd> to toggle default flat shading and Phong shading.
 </b>
 <p>
-    <!-- <div style="display: flex;">
-		<img src="./task3flat.png" width="300" height="300" style="flex: 1; margin: 25px;" >
-		<img src="./task3smooth.png" width="300" height="300" style="flex: 1; margin: 25px;">
-	</div> -->
 	<div align="middle">
 		<table style="width:100%">
 		  <tr align="center">
@@ -204,9 +200,25 @@
 </b>
 <p>
 	In order to implement edge flipping, we traverse the adjacent triangles to store all the relevant elements of the two triangles with respect to the edge we want to flip. Then we reassign all the pointers of the halfedges, vertices and faces (edges weren't reassigned due to how we assigned half-edges) to their appropriate half-edge pointers.
+	<br>
+	A diagram of our element naming convention is shown below:
 </p>
 <br>
-
+<div align="middle">
+	<table style="width:100%">
+	  <tr align="center">
+		<td>
+			<img src="./original_diagram.jpg" align="middle" width="400px"/>
+			<figcaption>Mesh before edge flip</figcaption>
+		</td>
+		<br>
+		<td>
+			<img src="./flip_diagram.jpg" align="middle" width="400px"/>
+			<figcaption>Mesh after edge flip</figcaption>
+		</td>
+	  </tr>
+	</table>
+</div>
 
 <b>
   Show screenshots of the teapot before and after some edge flips.
@@ -235,7 +247,7 @@
     Write about your eventful debugging journey, if you have experienced one.
 </b>
 <p>
-    Our implementation focused on human readability by naming elements geometrically to match intuition. (*include diagram*) Coincidentally, this was also a great for debugging, which required a bit of experimental edge flipping.
+    Our implementation focused on human readability by naming elements geometrically to match intuition. Coincidentally, this was also a great for debugging, which required a bit of experimental edge flipping.
 </p>
 <br>
 
@@ -246,8 +258,24 @@
 </b>
 <p>
     We implemented edge splits with a similar methodology to edge flipping. We traversed the adjacent triangles to store all the original elements, then defined all the new elements that would b created. Finally, with the help of a diagram all the elements had their pointers reassigned in the same fashion as for edge flipping, except we had to reassign edges as well this time.
-	
+	<br>
+	The diagram for this part is shown below. Elements marked in blue pen are new:
 </p>
+<div align="middle">
+	<table style="width:100%">
+	  <tr align="center">
+		<td>
+			<img src="./original_diagram.jpg" align="middle" width="400px"/>
+			<figcaption>Mesh before edge split</figcaption>
+		</td>
+		<br>
+		<td>
+			<img src="./split_diagram.jpg" align="middle" width="400px"/>
+			<figcaption>Mesh after edge split</figcaption>
+		</td>
+	  </tr>
+	</table>
+</div>
 <br>
 
 
@@ -301,7 +329,7 @@
     Write about your eventful debugging journey, if you have experienced one.
 </b>
 <p>
-    Debugging is for chumps. Got it first try thanks to experience debugging edge flips.
+    Thanks to our experience debugging edge flips and some quick double checking, we got it first try.
 </p>
 <br>
 
@@ -429,7 +457,10 @@
     Save your best polygon mesh as partsevenmodel.dae in your docs folder and show us a screenshot of the mesh in your write-up.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+	<div align="middle">
+		<img src="./CS184 Star Subdiv0.png" align="middle" width="50%">
+		<figcaption>Original Star Mesh</figcaption>
+	</div>
 </p>
 <br>
 
@@ -438,7 +469,27 @@
     Include a series of screenshots showing your original mesh and your mesh after one and two rounds of subdivision. If you have used custom shaders, include screenshots of your mesh with those shaders applied as well.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+    <div align="middle">
+		<table style="width:100%">
+		  <tr align="center">
+			<td>
+			  <img src="CS184 Star Subdiv0.png" align="middle" width="400px"/>
+			  <figcaption>Round 0</figcaption>
+			</td>
+			<td>
+			  <img src="CS184 Star Subdiv1.png" align="middle" width="400px"/>
+			  <figcaption>Round 1</figcaption>
+			</td>
+		  </tr>
+		  <br>
+		  <tr align="center">
+			<td>
+			  <img src="CS184 Star Subdiv2.png" align="middle" width="400px"/>
+			  <figcaption>Level 2</figcaption>
+			</td>
+		  </tr>
+		</table>
+	  </div>
 </p>
 <br>
 
