@@ -247,7 +247,7 @@
     Write about your eventful debugging journey, if you have experienced one.
 </b>
 <p>
-    Our implementation focused on human readability by naming elements geometrically to match intuition. Coincidentally, this was also a great for debugging, which required a bit of experimental edge flipping.
+    Our implementation focused on human readability by naming elements geometrically to match intuition. Coincidentally, this was also a great tool for debugging, which required a bit of experimental edge flipping.
 </p>
 <br>
 
@@ -257,7 +257,7 @@
   Briefly explain how you implemented the edge split operation and describe any interesting implementation / debugging tricks you have used.
 </b>
 <p>
-    We implemented edge splits with a similar methodology to edge flipping. We traversed the adjacent triangles to store all the original elements, then defined all the new elements that would b created. Finally, with the help of a diagram all the elements had their pointers reassigned in the same fashion as for edge flipping, except we had to reassign edges as well this time.
+    We implemented edge splits with a similar methodology to edge flipping. We traversed the adjacent triangles to store all the original elements, then defined all the new elements that would be created. Finally, with the help of a diagram all the elements had their pointers reassigned in the same fashion as for edge flipping, except we had to reassign edges as well this time.
 	<br>
 	The diagram for this part is shown below. Elements marked in blue pen are new:
 </p>
@@ -362,7 +362,7 @@
   Briefly explain how you implemented the loop subdivision and describe any interesting implementation / debugging tricks you have used.
 </b>
 <p>
-    We implemented loop subdivision using the suggested method on the spec. We first precalculate the positions of all the new vertices we will be creating using neighbor-based heuristics, then subdivide each triangle from 1 to 4 and reassign the new vertex positions using the precalculated ones. To subdivide the mesh we start by splitting every edge in the mesh thats not on the boundary, then flipping all edges that are between a new edge and edge that existed in the old mesh. Once the new positions are reassigned the mesh has been smoothed out and has a higher polygon count.
+    We implemented loop subdivision using the suggested method on the spec. We first precalculate the positions of all the new vertices we will be creating using neighbor-based heuristics, then subdivide each triangle from 1 to 4 and reassign the new vertex positions using the precalculated ones. To subdivide the mesh we start by splitting every edge in the mesh thats not on the boundary, then flipping all edges that are between a new vertec and a vertex that existed in the old mesh. Once the new positions are reassigned the mesh has been smoothed out and has a higher polygon count.
 	<br>
 	As we fiddled around the code, we debugged by isolating each step in the process using print statements to quickly hone in on the problem.
 
@@ -498,7 +498,7 @@
     Describe what you have done to enhance your mesh beyond the simple humanoid mesh described in the tutorial.
 </b>
 <p>
-    YOUR RESPONSE GOES HERE
+    As we experimented with Blender and its controls, we found a way to make tree-like or coral-like structures by extruding faces from the base cube to create branches and then modifying the edges to make “curves.” Putting the model into the project and running subdivision smoothed out the branches and turned them into actual curves. We then took the idea and created this model that has a lot of branches and resembles a starfish or a nerve cell.
 </p>
 <br>
 
