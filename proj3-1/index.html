@@ -89,7 +89,7 @@ Do <em>NOT</em> use absolute paths, such as <pre>"/Users/student/Desktop/image.j
 
 <h2 align="middle">Overview</h2>
 <p>
-  This project focuses on estimating the lighting of a geometry from a perspective by tracing rays from our "camera" into the scene. The first step was to generate these rays can be defined by their origin and their direction. In order to detect what the ray collides with, we need to determine whether the ray collides with the various objects in our scene. We implement triangle intersection by defining the intersection of the ray and the plane of the triangle as barycentric coordinates, and if the coordinates are valid we know it intersected the triangle. Sphere intersection is implemented by solving a quadratic equation derived from the ray equation and the equation for a point on a sphere.
+  This project focuses on estimating the lighting of a geometry from a perspective by tracing rays from our "camera" into the scene. The first step was to generate these rays which can be defined by their origin and their direction. In order to detect what the ray collides with, we need to determine whether the ray collides with the various objects in our scene. We implement triangle intersection by defining the intersection of the ray and the plane of the triangle as barycentric coordinates, and if the coordinates are valid we know it intersected the triangle. Sphere intersection is implemented by solving a quadratic equation derived from the ray equation and the equation for a point on a sphere.
   <br>
   In order to efficiently detect what objects a ray intersects with, we create a binary tree structure called the Bounding Volume Hierarchy which stores bounding boxes that hold groups of objects, and every level stores bounding boxes for roughly half of the objects of the previous level. This makes a previous linear computation over all n objects a log n computation due to the binary tree structure.
   <br>
@@ -115,7 +115,7 @@ Show images with normal shading for a few small .dae files. -->
   <br>
   We estimate the integral of radiance incident upon a pixel by shooting multiple random rays out of every pixel into the world as samples. These rays sample the world contained in its respective pixel and the pixel displays the average of the samples.
   <br>
-  In order to sample the world, primitive intersection allows the renderer to "see" various geometries by recording when and how the ray interacts with triangles and spheres. We want to know if a ray intersects with a given primitive, and, if it does, where it intersects, the normal at the intersection, and the bsdf of the material it intersects with.
+  In order to sample the world, primitive intersection allows the renderer to "see" various geometries by recording when and how the ray interacts with triangles and spheres. We want to know if a ray intersects with a given primitive, and, if it does, we can know where it intersects, the normal at the intersection, and the bsdf of the material it intersects with.
   
 </p>
 <br>
@@ -256,7 +256,7 @@ Compare the results between uniform hemisphere sampling and lighting sampling in
 </h3>
 <p>
   The direct lighting functions are used to estimate the lighting at a point in the geometry via pathtracing. The first implementation with uniform hemisphere sampling works by sending a constant number of random rays picked uniformly from a hemisphere from the point and monte carlo estimating the lighting by averaging the light coming from each of the random rays.
-  The optimized direct lighting function uses importance sampling such that rays are sampled from light sources in the geometry, instead of just randomly in an hemisphere. Every light is randomly sampled a certain number of times except for point lights which only need to be sampled once, and their illuminance averaged through monte carlo estimation.
+  The optimized direct lighting function uses importance sampling such that rays are sampled from light sources in the geometry, instead of just randomly in an hemisphere. Every light is randomly sampled a certain number of times except for point lights which only need to be sampled once, and their illuminance is averaged through monte carlo estimation.
 </p>
 
 <h3>
