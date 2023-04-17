@@ -85,7 +85,7 @@
 		<br><br>
 		Now with functional physics, we want to efficiently render the animation. Using parallelizeable shader programs we can apply textures, blinn-phong shading, and height mapping. The latter can be accomplished with visual bump mapping, or with mesh-altering displacement mapping.
 		<br><br>
-		Some of the problems we faced were implementing and designing the hash map for self collisions, and getting used to the shader coding format. The former we figured out by talking with others, and the latter just took some practice and trial and error. We had some spectacular bugs with the self collision where the cloth would implode or suddenly gain rapid momentum due to an error with the normalization of the correction vectors, but nothing that a little searching couldn't fix.
+		Some of the problems we faced were implementing and designing the hash map for self collisions, and getting used to the shader coding format. The former we figured out by talking with each other, and the latter just took some practice along with trial and error. We had some spectacular bugs with the self collision where the cloth would implode or suddenly gain rapid momentum due to an error with the normalization of the correction vectors, but nothing that a little searching couldn't fix.
 	</p>
   </div>
 
@@ -165,7 +165,7 @@
     </b></blockquote>
 
     <p>
-		<code>ks</code> affects how strong the constraint forces are. Thus they affect how much the cloth stays rigid, and how much resistance its puts up to bending and shearing.
+		<code>ks</code> affects how strong the constraint forces are. Thus they affect how much the cloth stays rigid, and how much resistance it puts up to bending and shearing.
 		<br>
 		At low <code>ks</code>, the cloth seems more liquid-like because the solid constraints are weak.
 		<br>
@@ -180,7 +180,7 @@
     </b></blockquote>
 
     <p>
-		Density effects the mass of every mass point, and since $\frac{F}{m}=a$, the effect of changing the density has the inverse effect of changing the spring constant. Thus if you were to change the ks and density by the same factor, it would lead to the same simulation. If density is changed without altering the spring constant, we would get effects similar to the ones shown above for the spring constant; low density would get the effects of high ks, and vice versa.
+		Density effects the mass of every mass point, and since $\frac{F}{m}=a$, the effect of changing the density has the inverse effect of changing the spring constant. Thus if you change the ks and density by the same factor, it would lead to the same simulation. If density is changed without altering the spring constant, we would get effects similar to the ones shown above for the spring constant; low density would get the effects of high ks, and vice versa.
     </p>
     
     
@@ -238,7 +238,7 @@
 	  <br>
 	  The damping images show how the cloth acts as it falls. Low damping gives the oscillations seen in the ripples of the first image, while high damping slows down the falling, but also stabilizes it.
 	  <br>
-	  The ks/density images show how both the parameters can affect how well the cloth can rigidly hold itself under its own weight.
+	  The ks/density images show how both parameters can affect how well the cloth can rigidly hold itself under its own weight.
     </p>
 
 
@@ -287,7 +287,7 @@
     </b></blockquote>
 
     <p>
-		As described before, ks affects the stiffness of the cloth, or how rigid it is when acted upon by forces. Thus, for lower ks we see the cloth droop very loosely over the sphere, almost like its stretched over it. At higher ks, the cloth has folds but its like trying to wrap a ball in wrapping paper. The cloth maintains its structure (little stretching/malformation) and doesn't fold much.
+		As described before, ks affects the stiffness of the cloth, or how rigid it is when acted upon by forces. Thus, for lower ks we see the cloth droop very loosely over the sphere, almost like it is stretched over it. At higher ks, the cloth has folds but it is like trying to wrap a ball in wrapping paper. The cloth maintains its structure (little stretching/malformation) and doesn't fold much.
     </p>
 
 
@@ -391,7 +391,7 @@
     <p>
 		Shader programs are meant to speed up the rendering of geometries by parallelizing the process. Shader programs are meant to be run independently of one another, on multiple objects in the scene simultaneously, allowing for trivial parallelization.
 		<br>
-		There are two shader types for our renders: vertex and fragment shaders. Vertex shaders are meant to be run on a single vertex and perform any relevant transforms and modify their normals and positions. They also pass values to the second type of shader, fragments, which operate on the "fragments" between the vertices. Using the attributes determined by the vertex shaders, the fragment can be processed and a color assigned to it.		
+		There are two shader types for our renders: vertex and fragment shaders. Vertex shaders are meant to be run on a single vertex and perform any relevant transforms and modify their normals and positions. They also pass values to the second type of shader, fragments, which operate on the "fragments" between the vertices. Using the attributes determined by the vertex shaders, the fragment can be processed and a color can be assigned to it.		
     </p>
 
 
